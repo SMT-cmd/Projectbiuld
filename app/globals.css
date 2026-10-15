@@ -127,3 +127,38 @@ h1 em{font-style:normal;color:var(--blue);position:relative;white-space:normal}
 @media(max-width:780px){.topbar{padding:8px 4%;justify-content:center}.topbar span{display:none}.site-header{padding:13px 4%;min-height:auto;flex-wrap:wrap;gap:12px}.brand{font-size:19px}.brand-mark{width:37px;height:37px}.site-header nav{order:3;width:100%;overflow-x:auto;padding:7px 0 4px;gap:21px;scrollbar-width:none}.site-header nav::-webkit-scrollbar{display:none}.site-header nav a{white-space:nowrap;font-size:11px}.header-cta{font-size:10px;padding:10px 12px}.hero{padding:46px 4% 44px}.hero-inner{grid-template-columns:1fr;gap:18px}.hero-art{min-height:315px;margin:0 6px}.paper-stack{height:auto;min-height:275px}.note-one{left:0;top:8px}.note-two{right:0;bottom:3px}.hero h1{font-size:clamp(38px,10vw,48px)}.hero p{font-size:14px}.search-box{margin-top:22px}.trust-row{gap:10px 16px}.section{padding:52px 4%}.section-head{align-items:start;flex-direction:column;gap:15px}.section h2{font-size:28px}.dept-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.dept-card{padding:15px;min-height:140px}.topic-list,.steps-grid,.faq-list{grid-template-columns:1fr}.topic-card{padding:17px;gap:12px}.callout{padding:27px 23px;align-items:start;flex-direction:column;margin:0 4% 45px}.callout h2{font-size:23px}.footer{padding:35px 4% 18px}.footer-main{grid-template-columns:1fr;gap:15px}.footer-main p{margin-top:0}.footer-bottom{margin-top:22px}.page-hero{padding:38px 4%}.page-hero h1{font-size:35px}.page-content{padding:30px 4% 56px}.form-card{padding:22px 18px}.form-grid{grid-template-columns:1fr}.form-field.full{grid-column:auto}.filter-row input{min-width:100%}.help-float{right:12px;bottom:12px;padding:11px 13px}}
 @media(max-width:390px){.brand{font-size:17px}.brand small{font-size:7px}.header-cta{padding:9px}.search-box{flex-wrap:wrap}.search-box input{flex-basis:calc(100% - 50px)}.search-box button{width:100%;margin-top:4px}.dept-card h3{font-size:13px}.dept-card p{font-size:10px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Editorial typography: calmer rhythm, readable line lengths and deliberate hierarchy. */
+body { font-family: var(--font-dm-sans), "DM Sans", Inter, ui-sans-serif, system-ui, sans-serif; font-size: 16px; line-height: 1.72; letter-spacing: -.012em; color: #26364b; text-rendering: optimizeLegibility; -webkit-font-smoothing: antialiased; }
+p, li { max-width: 70ch; }
+p { line-height: 1.78; letter-spacing: -.008em; margin-block: 0 1.1rem; }
+h1, h2, h3, h4 { font-family: var(--font-manrope), "Manrope", Inter, ui-sans-serif, system-ui, sans-serif; letter-spacing: -.045em; line-height: 1.16; text-wrap: balance; color: #10233f; }
+h1 { line-height: 1.08; letter-spacing: -.052em; }
+h2 { line-height: 1.2; }
+h3 { line-height: 1.28; letter-spacing: -.032em; }
+.hero h1 { max-width: 13ch; margin-block: 0 1.25rem; }
+.hero p { max-width: 54ch; line-height: 1.8; }
+.page-hero { padding-block: clamp(3rem, 7vw, 5.75rem); }
+.page-hero h1 { max-width: 19ch; margin-block: 1rem 1.15rem; }
+.page-hero > p { max-width: 68ch; font-size: clamp(1rem, 1.5vw, 1.12rem); }
+.page-content { line-height: 1.78; }
+.page-content article h2 { margin-block: 0 1rem; }
+.page-content article p { margin-block: 0 1.15rem; }
+.page-content article ul { padding-left: 1.3rem; }
+.page-content article li { padding-left: .25rem; margin-block: .55rem; }
+.eyebrow { letter-spacing: .13em; line-height: 1.5; }
+.topic-card h3, .dept-card h3, .form-card h3 { text-wrap: pretty; }
+.topic-card p, .dept-card p, .form-card p { line-height: 1.7; }
+.search-box input { min-width: 0; line-height: 1.4; }
+.paper-tag { line-height: 1.5; }
+.muted { line-height: 1.8; }
+.research-guide { margin-block: 2.75rem; padding: clamp(1.25rem, 3vw, 2rem); border: 1px solid #e1e8f0; border-radius: 14px; background: linear-gradient(145deg, #f8fbff 0%, #fff 76%); }
+.research-guide .eyebrow { color: #174ea6; font-size: .72rem; font-weight: 750; }
+.research-guide h2 { max-width: 24ch; margin-block: .7rem 1rem; }
+.research-guide > p { max-width: 68ch; }
+.research-guide ol { padding-left: 1.35rem; margin-block: 1.25rem; }
+.research-guide li { padding-left: .35rem; margin-block: .85rem; line-height: 1.75; }
+.research-guide li strong { color: #10233f; }
+.research-guide .guide-note { margin: 1.25rem 0 0; padding: .85rem 1rem; border-left: 3px solid #d83b46; background: #fff; color: #596a80; font-size: .9rem; }
+@media (max-width: 640px) { body { font-size: 15.5px; line-height: 1.72; } .hero h1 { font-size: clamp(2.55rem, 11vw, 3.6rem); line-height: 1.04; } .page-hero h1 { font-size: clamp(2.15rem, 9vw, 3rem); } .page-content { padding-inline: 1.1rem; } }
