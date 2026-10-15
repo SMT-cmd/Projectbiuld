@@ -44,7 +44,7 @@ export default function SignupPage() {
   return <section className="page-content"><form className="form-card" onSubmit={submit}>
     <div className="eyebrow">JOIN RESEARCHHUB</div>
     <h1 style={{fontSize:36}}>Create your account</h1>
-    <p className="muted">Create an account to get started. Project saving and account-based history will be enabled as those features are connected.</p>
+    <p className="muted">Create an account to save your research planning briefs and manage your account. Account access requires the connected Supabase service.</p>
     <label className="form-field" style={{marginTop:18}}>Full name<input autoComplete="name" required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Your name"/></label>
     <label className="form-field" style={{marginTop:16}}>Email address<input type="email" autoComplete="email" required maxLength={254} value={email} onChange={e=>setEmail(e.target.value)} placeholder="you@example.com"/></label>
     <label className="form-field" style={{marginTop:16}}>Password<input type="password" autoComplete="new-password" required minLength={8} value={password} onChange={e=>setPassword(e.target.value)} placeholder="At least 8 characters"/></label>
