@@ -30,7 +30,13 @@ export default function LoginPage() {
         return;
       }
       const next = new URLSearchParams(window.location.search).get("next");
-      const safeNext = next && next.startsWith("/") && !next.startsWith("//") ? next : "/account";
+      let safeNext = "/account";
+      if (next) {
+        try {
+          const target = new URL(next, window.location.origin);
+          if (target.origin === window.location.origin) safeNext = target.pathname + target.search + target.hash;
+        } catch { /* keep the safe account fallback */ }
+      }
       window.location.href = safeNext;
     } catch {
       setMessage("We could not reach the account service. Please try again.");
