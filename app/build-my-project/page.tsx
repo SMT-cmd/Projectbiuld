@@ -3,7 +3,7 @@
 import "./builder.css";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpenCheck, CheckCircle2, Copy, FileText, RotateCcw } from "lucide-react";
 
 const stages = ["Project basics", "Research focus", "Study approach", "Your outline"];
@@ -25,6 +25,27 @@ export default function BuildMyProjectPage() {
   const [population, setPopulation] = useState("");
   const [notes, setNotes] = useState("");
   const [copied, setCopied] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
+
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem("researchhub-builder-draft");
+      if (!raw) return;
+      const draft = JSON.parse(raw) as Record<string, unknown>;
+      if (typeof draft.title === "string") setTitle(draft.title);
+      if (typeof draft.department === "string") setDepartment(draft.department);
+      if (typeof draft.level === "string") setLevel(draft.level);
+      if (typeof draft.setting === "string") setSetting(draft.setting);
+      if (typeof draft.problem === "string") setProblem(draft.problem);
+      if (typeof draft.aim === "string") setAim(draft.aim);
+      if (typeof draft.method === "string") setMethod(draft.method);
+      if (typeof draft.population === "string") setPopulation(draft.population);
+      if (typeof draft.notes === "string") setNotes(draft.notes);
+    } catch {
+      window.localStorage.removeItem("researchhub-builder-draft");
+    }
+  }, []);
 
   const outline = useMemo(() => {
     const focus = title.trim() || "[Enter your research topic]";
@@ -95,6 +116,39 @@ export default function BuildMyProjectPage() {
     URL.revokeObjectURL(url);
   }
 
+  async function saveProject() {
+    setSaving(true);
+    setSaveMessage("");
+    const localDraft = { title, department, level, setting, problem, aim, method, population, notes };
+    try { window.localStorage.setItem("researchhub-builder-draft", JSON.stringify(localDraft)); } catch { /* local recovery is optional */ }
+    try {
+      const response = await fetch("/api/project-drafts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          title: title.trim() || "[Untitled research topic]", department, academicLevel: level,
+          setting: setting.trim(), problem: problem.trim(), aim: aim.trim(), methodology: method,
+          population: population.trim(), notes: notes.trim(), outline,
+        }),
+      });
+      const payload = await response.json().catch(() => ({}));
+      if (response.status === 401) {
+        window.location.href = "/login?next=" + encodeURIComponent("/build-my-project");
+        return;
+      }
+      if (!response.ok) {
+        setSaveMessage(payload.error || "We could not save this brief. Your local copy is still available to download.");
+        setSaving(false);
+        return;
+      }
+      try { window.localStorage.removeItem("researchhub-builder-draft"); } catch { /* storage is optional */ }
+      setSaveMessage("Saved to your account. You can find it from My account.");
+    } catch {
+      setSaveMessage("We could not reach the save service. Download a local copy and try again later.");
+    }
+    setSaving(false);
+  }
+
   function next() { setStep((current) => Math.min(3, current + 1)); }
   function back() { setStep((current) => Math.max(0, current - 1)); }
   function reset() {
@@ -143,6 +197,9 @@ export default function BuildMyProjectPage() {
           <div className="builder-checklist"><p><CheckCircle2 size={16}/> Working title and academic context</p><p><CheckCircle2 size={16}/> Draft aim, objectives and research questions</p><p><CheckCircle2 size={16}/> Initial method and scope prompts</p><p><CheckCircle2 size={16}/> Responsible next steps</p></div>
           <div className="notice">This is a planning template, not a completed academic project. Verify all claims and sources, and follow your institution's academic integrity rules.</div>
           <div className="builder-actions"><button className="btn-primary" type="button" onClick={copyOutline}><Copy size={16}/>{copied ? "Copied!" : "Copy outline"}</button><button className="btn-secondary" type="button" onClick={downloadOutline}>Save as text</button></div>
+          <button className="btn-secondary builder-save-button" type="button" onClick={saveProject} disabled={saving}>{saving ? "Saving to account…" : "Save to my account"}</button>
+          {saveMessage && <p role="status" className="notice builder-save-message">{saveMessage}</p>}
+          <p className="muted builder-save-caption">Saving keeps this planning brief private to your signed-in account. Account saving becomes available after the Supabase database migration and credentials are configured.</p>
         </>}
         <div className="builder-nav">
           <button className="btn-secondary" type="button" onClick={back} disabled={step===0}>Back</button>
@@ -157,7 +214,7 @@ export default function BuildMyProjectPage() {
         <h4>Research setting</h4><p>{setting.trim() || "Your selected location or organisation will appear here."}</p>
         <h4>Research problem</h4><p>{problem.trim() || "Add a short description of the issue you want to understand."}</p>
         <h4>Study approach</h4><p>{method}{population.trim() ? " · " + population : ""}</p>
-        <div className="preview-note">Your brief updates as you work. Nothing is submitted to a server by this page.</div>
+        <div className="preview-note">Your brief updates as you work. Download a local copy at any time, or sign in and save the brief to your account once database setup is complete.</div>
       </aside>
     </div>
   </section>;
