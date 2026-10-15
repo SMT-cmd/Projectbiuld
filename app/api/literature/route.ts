@@ -47,6 +47,14 @@ export async function GET(request: Request) {
     const works = (payload.results || [])
       .filter((work) => work.title && work.id)
       .map((work) => {
+        const inverted = work.abstract_inverted_index || {};
+        const abstract = Object.entries(inverted)
+          .flatMap(([word, positions]) => positions.map((position) => ({ word, position })))
+          .sort((first, second) => first.position - second.position)
+          .map((item) => item.word)
+          .join(" ")
+          .replace(/\s+/g, " ")
+          .trim();
         const doi = work.doi ? work.doi.replace(/^https?:\/\/doi\.org\//i, "") : null;
         const oaUrl = work.open_access?.oa_url || null;
         const landingUrl = work.primary_location?.landing_page_url || null;
