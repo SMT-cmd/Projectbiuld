@@ -4,6 +4,75 @@ export const dynamic = "force-dynamic";
 
 type DownloadContext = { params: Promise<{ slug: string }> };
 
+type LiteratureRecord = {
+  id: string;
+  title: string;
+  year: number | null;
+  authors: string[];
+  venue: string | null;
+  doi: string | null;
+  url: string;
+  openAccess: boolean;
+  abstract: string;
+};
+
+type OpenAlexRecord = {
+  id?: string;
+  title?: string | null;
+  publication_year?: number | null;
+  doi?: string | null;
+  authorships?: Array<{ author?: { display_name?: string | null } | null }>;
+  primary_location?: { landing_page_url?: string | null; source?: { display_name?: string | null } | null } | null;
+  open_access?: { is_oa?: boolean; oa_url?: string | null } | null;
+  abstract_inverted_index?: Record<string, number[]> | null;
+};
+
+async function fetchTopicLiterature(topic: (typeof allTopics)[number]): Promise<{ records: LiteratureRecord[]; searchedAt: string | null }> {
+  const query = [topic.title, ...topic.tags].join(" ").slice(0, 180);
+  const url = new URL("https://api.openalex.org/works");
+  url.searchParams.set("search", query);
+  url.searchParams.set("per_page", "6");
+  url.searchParams.set("sort", "relevance_score:desc");
+  url.searchParams.set("select", "id,title,publication_year,doi,authorships,primary_location,open_access,abstract_inverted_index");
+  try {
+    const response = await fetch(url, {
+      headers: { Accept: "application/json", "User-Agent": "ResearchHub/1.0 (topic-pack literature discovery)" },
+      signal: AbortSignal.timeout(7500),
+      next: { revalidate: 1800 },
+    });
+    if (!response.ok) {
+      console.error("OpenAlex download lookup returned", response.status);
+      return { records: [], searchedAt: null };
+    }
+    const payload = await response.json() as { results?: OpenAlexRecord[] };
+    const records = (payload.results || []).filter((item) => item.id && item.title).map((item) => {
+      const inverted = item.abstract_inverted_index || {};
+      const abstractWords = Object.entries(inverted).flatMap(([word, positions]) =>
+        positions.map((position) => ({ word, position }))
+      ).sort((a, b) => a.position - b.position);
+      const abstract = abstractWords.map((item) => item.word).join(" ").replace(/\s+/g, " ").trim();
+      const doi = item.doi ? item.doi.replace(/^https?:\/\/doi\.org\//i, "") : null;
+      const oaUrl = item.open_access?.oa_url || null;
+      const landingUrl = item.primary_location?.landing_page_url || null;
+      return {
+        id: item.id!,
+        title: item.title!,
+        year: item.publication_year ?? null,
+        authors: (item.authorships || []).map((entry) => entry.author?.display_name).filter((name): name is string => Boolean(name)).slice(0, 5),
+        venue: item.primary_location?.source?.display_name || null,
+        doi,
+        url: oaUrl || landingUrl || (doi ? "https://doi.org/" + doi : item.id!),
+        openAccess: Boolean(item.open_access?.is_oa && oaUrl),
+        abstract: abstract.slice(0, 1600),
+      };
+    });
+    return { records, searchedAt: new Date().toISOString() };
+  } catch (error) {
+    console.error("OpenAlex download lookup failed", error instanceof Error ? error.message : "unknown error");
+    return { records: [], searchedAt: null };
+  }
+}
+
 function escapeHtml(value: string) {
   return value.replace(/[&<>"']/g, (character) => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
@@ -63,7 +132,7 @@ function buildGuide(topic: (typeof allTopics)[number]) {
   return { query, aim, objectives, questions, literatureThemes, methods, scope, questionnaire, nextSteps };
 }
 
-function asText(topic: (typeof allTopics)[number], guide: ReturnType<typeof buildGuide>) {
+function asText(topic: (typeof allTopics)[number], guide: ReturnType<typeof buildGuide>, literature: LiteratureRecord[], searchedAt: string | null) {
   return [
     "RESEARCHHUB — RESEARCH TOPIC PACK",
     topic.title,
@@ -111,19 +180,31 @@ function asText(topic: (typeof allTopics)[number], guide: ReturnType<typeof buil
     "11. RESPONSIBLE NEXT STEPS",
     ...guide.nextSteps.map((item, index) => `${index + 1}. ${item}`),
     "",
-    "12. SCHOLARLY SEARCH LINKS",
+    "12. LIVE SCHOLARLY RECORDS — METADATA RETRIEVED FOR THIS DOWNLOAD",
+    searchedAt ? "Lookup time: " + searchedAt : "A live lookup could not be completed while this pack was generated.",
+    ...(literature.length ? literature.flatMap((record, index) => [
+      `${index + 1}. ${record.authors.length ? record.authors.join(", ") : "Author details not supplied"} (${record.year ?? "n.d."}). ${record.title}. ${record.venue || "Publication venue not supplied"}.`,
+      record.doi ? "DOI: https://doi.org/" + record.doi : "DOI: not supplied in metadata",
+      "Record: " + record.url,
+      record.abstract ? "Abstract metadata: " + record.abstract : "Abstract not available in the returned metadata.",
+      record.openAccess ? "Open-access URL is listed in metadata; check any licence and reuse conditions." : "Open full text is not confirmed by the returned metadata.",
+      ""
+    ]) : ["No publication records were retrieved at download time. Use the live search links below to try again."]),
+    "These are candidate records returned by a relevance search, not a quality appraisal or a claim that the works support every statement in this topic pack. Open each original record, verify its authorship, date, content, and suitability, and cite only sources you actually read.",
+    "",
+    "13. SCHOLARLY SEARCH LINKS",
     `OpenAlex: https://api.openalex.org/works?search=${guide.query}`,
     `Google Scholar: https://scholar.google.com/scholar?q=${guide.query}`,
     `Crossref: https://search.crossref.org/?q=${guide.query}`,
     "",
-    "13. KEYWORDS",
+    "14. KEYWORDS",
     topic.tags.join("; "),
     "",
     "Prepared by ResearchHub as an editable planning aid. No real findings, quotations, or bibliography entries are fabricated in this document.",
   ].join("\n");
 }
 
-function asWordHtml(topic: (typeof allTopics)[number], guide: ReturnType<typeof buildGuide>) {
+function asWordHtml(topic: (typeof allTopics)[number], guide: ReturnType<typeof buildGuide>, literature: LiteratureRecord[], searchedAt: string | null) {
   const esc = escapeHtml;
   const list = (items: string[]) => items.map((item) => `<li>${esc(item)}</li>`).join("");
   const queryLinks = [
@@ -151,8 +232,9 @@ function asWordHtml(topic: (typeof allTopics)[number], guide: ReturnType<typeof 
 <h3>Chapter Four — Results and Discussion</h3><p>Report only real analysed data or genuine documented findings. Present appropriate tables/figures and compare verified results with relevant literature. Do not create or present invented data as real.</p>
 <h3>Chapter Five — Summary, Conclusion and Recommendations</h3><p>Answer each research question from actual findings, acknowledge limitations, and make recommendations proportionate to the evidence.</p>
 <h2>11. Responsible next steps</h2><ol>${list(guide.nextSteps)}</ol>
-<h2>12. Scholarly discovery links</h2><ul>${queryLinks.map(([label, href]) => `<li><a href="${href}">${esc(label)}</a> — ${esc(decodeURIComponent(href))}</li>`).join("")}</ul>
-<h2>13. Keywords</h2><p>${topic.tags.map(esc).join(" · ")}</p>
+<h2>12. Live scholarly records — metadata retrieved for this download</h2><p>Lookup time: ${searchedAt ? esc(searchedAt) : "live lookup unavailable at download time"}.</p>${literature.length ? literature.map((record, index) => `<article><h3>${index + 1}. <a href="${esc(record.url)}">${esc(record.title)}</a></h3><p>${esc(record.authors.join(", ") || "Author details not supplied")}${record.year ? " (" + record.year + ")" : ""}${record.venue ? " · " + esc(record.venue) : ""}</p>${record.doi ? `<p>DOI: <a href="https://doi.org/${esc(record.doi)}">https://doi.org/${esc(record.doi)}</a></p>` : ""}${record.abstract ? `<p>${esc(record.abstract)}</p>` : "<p>Abstract metadata was not provided.</p>"}<p>${record.openAccess ? "An open-access URL is listed in metadata; check its licence and reuse conditions." : "Open full text is not confirmed by the returned metadata."}</p></article>`).join("") : "<p>No publication records were retrieved when this file was generated. Use the external discovery links to run a search.</p>"}<p class="notice">These are candidate search records, not a quality appraisal. Open and read each original source before citing it. Confirm title, authors, date, methods and relevance independently.</p>
+<h2>13. Scholarly discovery links</h2><ul>${queryLinks.map(([label, href]) => `<li><a href="${href}">${esc(label)}</a> — ${esc(decodeURIComponent(href))}</li>`).join("")}</ul>
+<h2>14. Keywords</h2><p>${topic.tags.map(esc).join(" · ")}</p>
 <hr><p class="meta">Prepared by ResearchHub as an editable planning aid. No real findings, quotations, or bibliography entries are fabricated in this document.</p></body></html>`;
 }
 
@@ -165,7 +247,7 @@ export async function GET(request: Request, { params }: DownloadContext) {
   const format = (searchParams.get("format") || "doc").toLowerCase();
   const safeSlug = topic.slug.replace(/[^a-z0-9-]/gi, "");
   if (format === "txt") {
-    return new Response(asText(topic, guide), {
+    return new Response(asText(topic, guide, literature, searchedAt), {
       headers: {
         "Content-Type": "text/plain; charset=utf-8",
         "Content-Disposition": `attachment; filename="researchhub-${safeSlug}-topic-pack.txt"`,
@@ -173,7 +255,7 @@ export async function GET(request: Request, { params }: DownloadContext) {
       },
     });
   }
-  return new Response(asWordHtml(topic, guide), {
+  return new Response(asWordHtml(topic, guide, literature, searchedAt), {
     headers: {
       "Content-Type": "application/msword; charset=utf-8",
       "Content-Disposition": `attachment; filename="researchhub-${safeSlug}-topic-pack.doc"`,
