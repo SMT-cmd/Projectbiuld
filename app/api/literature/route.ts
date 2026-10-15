@@ -13,6 +13,7 @@ type OpenAlexWork = {
     source?: { display_name?: string | null } | null;
   } | null;
   open_access?: { is_oa?: boolean; oa_url?: string | null } | null;
+  abstract_inverted_index?: Record<string, number[]> | null;
   cited_by_count?: number;
 };
 
@@ -27,7 +28,7 @@ export async function GET(request: Request) {
   apiUrl.searchParams.set("search", query);
   apiUrl.searchParams.set("per_page", "8");
   apiUrl.searchParams.set("sort", "relevance_score:desc");
-  apiUrl.searchParams.set("select", "id,title,publication_year,doi,authorships,primary_location,open_access,cited_by_count");
+  apiUrl.searchParams.set("select", "id,title,publication_year,doi,authorships,primary_location,open_access,abstract_inverted_index,cited_by_count");
 
   try {
     const response = await fetch(apiUrl, {
@@ -63,6 +64,7 @@ export async function GET(request: Request) {
           url: oaUrl || landingUrl || fallbackUrl,
           openAccess: Boolean(work.open_access?.is_oa && oaUrl),
           citedByCount: work.cited_by_count || 0,
+          abstract: abstract.slice(0, 1800),
         };
       });
     return NextResponse.json({ works, source: "OpenAlex", returnedAt: new Date().toISOString() });
