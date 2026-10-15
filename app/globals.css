@@ -57,7 +57,7 @@ h1 em{font-style:normal;color:var(--blue);position:relative;white-space:normal}
 .note-one:first-letter{color:var(--red)}
 .note-two{bottom:14px;right:-4px}
 .section{padding:76px 6.2%;max-width:1520px;margin:auto}
-.section-head{display:flex;justify-content:space-between;gap:24px;align-items:end;margin-bottom:30px}
+.section-head{display:flex;justify-content:space-between;gap:24px;align-items:flex-end;margin-bottom:30px}
 .section h2{font-size:clamp(27px,3vw,36px);margin:12px 0 10px;font-weight:800}
 .section-intro{color:var(--muted);max-width:600px;margin:0;font-size:13px;line-height:1.8}
 .text-link{color:var(--blue);font-weight:800;font-size:12px;white-space:nowrap}
