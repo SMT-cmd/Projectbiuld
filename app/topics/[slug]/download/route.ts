@@ -112,7 +112,7 @@ function asText(topic: (typeof allTopics)[number], guide: ReturnType<typeof buil
     ...guide.nextSteps.map((item, index) => `${index + 1}. ${item}`),
     "",
     "12. SCHOLARLY SEARCH LINKS",
-    `OpenAlex: https://openalex.org/works?search=${guide.query}`,
+    `OpenAlex: https://api.openalex.org/works?search=${guide.query}`,
     `Google Scholar: https://scholar.google.com/scholar?q=${guide.query}`,
     `Crossref: https://search.crossref.org/?q=${guide.query}`,
     "",
@@ -127,7 +127,7 @@ function asWordHtml(topic: (typeof allTopics)[number], guide: ReturnType<typeof 
   const esc = escapeHtml;
   const list = (items: string[]) => items.map((item) => `<li>${esc(item)}</li>`).join("");
   const queryLinks = [
-    ["OpenAlex", `https://openalex.org/works?search=${guide.query}`],
+    ["OpenAlex", `https://api.openalex.org/works?search=${guide.query}`],
     ["Google Scholar", `https://scholar.google.com/scholar?q=${guide.query}`],
     ["Crossref", `https://search.crossref.org/?q=${guide.query}`],
   ];
