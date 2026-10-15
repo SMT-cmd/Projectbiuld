@@ -1,0 +1,2 @@
+import Link from "next/link";
+export default function RequestSuccess(){return <section className="page-content"><div className="form-card"><div className="eyebrow">REQUEST RECEIVED</div><h1 style={{fontSize:36}}>Thank you for reaching out.</h1><p className="muted">Your request was saved. The team can review your requirements and follow up using the contact details you supplied.</p><Link className="btn-primary" href="/">Back to homepage</Link></div></section>;}
