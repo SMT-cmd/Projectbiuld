@@ -1,5 +1,7 @@
 "use client";
 
+import "./builder.css";
+
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { ArrowLeft, ArrowRight, BookOpenCheck, CheckCircle2, Copy, FileText, RotateCcw } from "lucide-react";
