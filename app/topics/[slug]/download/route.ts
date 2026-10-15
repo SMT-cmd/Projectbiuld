@@ -278,18 +278,18 @@ function asWordHtml(topic: (typeof allTopics)[number], guide: ReturnType<typeof 
 <h2>10. Five-chapter project writing framework</h2>
 <h3>CHAPTER ONE — INTRODUCTION</h3>
 <p><strong>1.1 Background of the study.</strong> Move from the wider disciplinary context to the region and then the selected local setting. Define key concepts, compare credible existing evidence and cite original sources. Do not treat a generic topic description as evidence of a local problem.</p>
-<p><strong>1.2 Statement of the problem.</strong> Although \${esc(topic.title.toLowerCase())} is the subject of interest, the specific problem must be demonstrated in the chosen context. Explain who is affected, what verifiable evidence confirms the issue, what is already known, what remains uncertain and why the gap matters. Insert current local statistics only when a reliable source exists.</p>
+<p><strong>1.2 Statement of the problem.</strong> Although ${esc(topic.title.toLowerCase())} is the subject of interest, the specific problem must be demonstrated in the chosen context. Explain who is affected, what verifiable evidence confirms the issue, what is already known, what remains uncertain and why the gap matters. Insert current local statistics only when a reliable source exists.</p>
 <p><strong>Problem-framing starter:</strong> In [setting/population], [specific issue] appears in [documented evidence/source]. Existing studies have investigated [what the sources actually report], but evidence about [specific local gap] remains limited or inconsistent. This study will examine [bounded issue] using [proposed method]. Replace all bracketed phrases with verified information before submitting.</p>
-<p><strong>1.3 Aim.</strong> \${esc(guide.aim)}</p>
-<h4>1.4 Specific objectives</h4><ol>\${list(guide.objectives)}</ol>
-<h4>1.5 Research questions</h4><ol>\${list(guide.questions)}</ol>
+<p><strong>1.3 Aim.</strong> ${esc(guide.aim)}</p>
+<h4>1.4 Specific objectives</h4><ol>${list(guide.objectives)}</ol>
+<h4>1.5 Research questions</h4><ol>${list(guide.questions)}</ol>
 <p><strong>1.6 Hypotheses:</strong> Include testable hypotheses only if the design, variables and analysis justify them. <strong>1.7 Significance:</strong> Explain potential value to specific groups without promising unsupported benefits. <strong>1.8 Scope:</strong> Define concepts, participants/data, location/organisation and period. <strong>1.9 Limitations:</strong> Explain realistic constraints and how they will be addressed. <strong>1.10 Operational definitions:</strong> Define key terms as used in this study, with sources where appropriate.</p>
 <h3>CHAPTER TWO — LITERATURE REVIEW</h3>
 <p><strong>2.1 Conceptual review:</strong> Define the key concepts with authoritative sources and compare differing definitions. <strong>2.2 Theory/framework:</strong> Select a model only after verifying its primary or authoritative source and explaining how its constructs guide the study. <strong>2.3 Empirical review:</strong> For each source, record its setting, objective, method, data/sample, analysis, actual reported findings, limitations, and relevance. <strong>2.4 Critical synthesis:</strong> Compare agreements and differences across studies; do not simply list summaries. <strong>2.5 Research gap:</strong> Derive the gap from records you have read and explain why it matters.</p>
-<h4>Literature themes to develop</h4><ol>\${list(guide.literatureThemes)}</ol>
+<h4>Literature themes to develop</h4><ol>${list(guide.literatureThemes)}</ol>
 <p><strong>Literature matrix:</strong> Author/year | context | objective | design/sample | measures or themes | findings actually reported | limitations | relevance.</p>
 <h3>CHAPTER THREE — METHODOLOGY</h3>
-<p><strong>3.1 Research design:</strong> \${esc(guide.methods)}</p>
+<p><strong>3.1 Research design:</strong> ${esc(guide.methods)}</p>
 <p><strong>3.2 Study setting/data context:</strong> Describe and justify the location, organisation, platform, archive or dataset. <strong>3.3 Population/data corpus:</strong> Define eligibility and exclusions. <strong>3.4 Sampling:</strong> State sample size, frame, technique, recruitment, eligibility and justification. <strong>3.5 Instrument/materials:</strong> Explain questionnaires, interview guides, coding sheets, test tasks or secondary data fields. <strong>3.6 Quality checks:</strong> Describe appropriate piloting, validity/reliability, triangulation or intercoder procedures; never claim an unperformed check.</p>
 <p><strong>3.7 Data collection:</strong> Provide a repeatable procedure and timeline. <strong>3.8 Analysis plan:</strong> Map every objective to its evidence source and technique. <strong>3.9 Ethics:</strong> Explain consent, confidentiality, data minimisation, storage, permission and required institutional approval.</p>
 <p><strong>Method alignment matrix:</strong> Objective | question | variable/theme | source | instrument/item | analysis technique.</p>
