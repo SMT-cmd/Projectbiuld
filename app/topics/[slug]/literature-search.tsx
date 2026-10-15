@@ -13,6 +13,7 @@ type Work = {
   url: string;
   openAccess: boolean;
   citedByCount: number;
+  abstract: string;
 };
 
 export default function LiteratureSearch({ query }: { query: string }) {
@@ -58,6 +59,7 @@ export default function LiteratureSearch({ query }: { query: string }) {
           <div>
             <h3><a href={work.url} target="_blank" rel="noreferrer">{work.title} <ExternalLink size={13} style={{ display: "inline", verticalAlign: "middle" }}/></a></h3>
             <p>{work.authors.length ? work.authors.join(", ") : "Author details not supplied"}{work.year ? " · " + work.year : ""}{work.venue ? " · " + work.venue : ""}</p>
+            {work.abstract && <p className="literature-abstract">{work.abstract}{work.abstract.length >= 1800 ? "…" : ""}</p>}
             <div className="topic-meta">
               {work.openAccess && <span>Open-access link listed</span>}
               {work.citedByCount > 0 && <span>{work.citedByCount.toLocaleString()} citations listed</span>}
