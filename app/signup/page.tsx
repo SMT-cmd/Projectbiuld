@@ -31,7 +31,8 @@ export default function SignupPage() {
       });
       if (authError) { setError(authError.message); setBusy(false); return; }
       if (data.session) {
-        setMessage("Your account has been created. You can now explore ResearchHub and start planning your project.");
+        window.location.href = "/account";
+        return;
       } else {
         setMessage("Check your email for the confirmation link to finish creating your account. If it does not arrive, check your spam folder.");
       }
