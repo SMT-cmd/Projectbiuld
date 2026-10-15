@@ -1,0 +1,5 @@
+import { NextResponse } from "next/server";
+import { createServerSupabase } from "@/lib/supabase/ssr";
+import { createSupabaseAdmin } from "@/lib/supabase/server";
+import { v2 as cloudinary } from "cloudinary";
+export async function POST(){const supabase=await createServerSupabase();const {data:{user}}=await supabase.auth.getUser();if(!user)return NextResponse.json({error:"Sign in required."},{status:401});const {data:profile}=await supabase.from("profiles").select("role").eq("id",user.id).maybeSingle();if(profile?.role!=="admin")return NextResponse.json({error:"Admin access required."},{status:403});const cloudName=process.env.CLOUDINARY_CLOUD_NAME;const apiKey=process.env.CLOUDINARY_API_KEY;const apiSecret=process.env.CLOUDINARY_API_SECRET;if(!cloudName||!apiKey||!apiSecret)return NextResponse.json({error:"Cloudinary is not configured."},{status:503});const timestamp=Math.floor(Date.now()/1000);const folder="researchhub/approved-materials";const signature=cloudinary.utils.api_sign_request({timestamp,folder},apiSecret);return NextResponse.json({cloudName,apiKey,timestamp,folder,signature});}
