@@ -253,3 +253,51 @@ a.topic-card:hover, a.dept-card:hover, .topic-card:focus-within, .dept-card:focu
 @media (hover: none) {
   .topic-card, .dept-card, .step, .faq-item, .form-card { transition: none; }
 }
+
+
+/* Hero and topic-catalogue resilience pass: keep the hero readable and cards usable
+   at common laptop, tablet, and phone widths without clipping the decorative art. */
+.hero, .hero-inner, .hero-inner > *, .hero-art { min-width: 0; }
+.hero { isolation: isolate; }
+.hero-inner { width: 100%; }
+.hero-inner > div:first-child { min-width: 0; }
+.hero h1 { max-width: 12ch; overflow-wrap: normal; }
+.hero p { overflow-wrap: break-word; }
+.hero-art { width: 100%; max-width: 520px; justify-self: center; }
+.floating-note { max-width: min(230px, 72%); overflow-wrap: anywhere; z-index: 2; }
+.note-one { left: 0; }
+.note-two { right: 0; }
+.paper-stack { max-width: calc(100% - 28px); }
+.topic-explainer { margin-top: 2rem; }
+.topic-explainer h2 { margin: 2rem 0 .8rem; }
+.topic-explainer p, .topic-explainer li { font-size: 1rem; line-height: 1.8; }
+.topic-explainer ul { padding-left: 1.35rem; }
+.topic-explainer li { margin-block: .55rem; }
+.topic-card > div:last-child { min-width: 0; flex: 1; }
+.topic-card .topic-meta { margin-top: .8rem; }
+.topic-card .topic-meta span { overflow-wrap: anywhere; }
+@media (min-width: 781px) and (max-width: 1050px) {
+  .hero-inner { grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr); gap: 28px; }
+  .hero-art { min-height: 320px; }
+  .floating-note { font-size: 10px; padding: 10px 12px; }
+  .site-header { gap: 14px; }
+  .site-header nav { gap: 12px; }
+}
+@media (max-width: 780px) {
+  .hero-inner { grid-template-columns: minmax(0, 1fr); }
+  .hero-inner > div:first-child { width: 100%; }
+  .hero h1 { max-width: 13ch; }
+  .hero-art { min-height: 290px; margin-inline: auto; }
+  .paper-stack { width: min(340px, calc(100% - 36px)); padding: 24px; }
+  .note-one { top: 0; left: 0; }
+  .note-two { right: 0; bottom: 0; }
+  .topic-explainer { overflow-wrap: anywhere; }
+}
+@media (max-width: 420px) {
+  .hero { padding-inline: 1rem; }
+  .hero h1 { font-size: clamp(2.3rem, 10.8vw, 2.8rem); }
+  .hero-art { min-height: 265px; }
+  .paper-stack { min-height: 240px; padding: 20px; }
+  .floating-note { max-width: 68%; font-size: 9px; padding: 9px 10px; }
+  .floating-note small { font-size: 9px; }
+}
