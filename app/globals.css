@@ -386,3 +386,15 @@ a.topic-card:hover, a.dept-card:hover, .topic-card:focus-within, .dept-card:focu
  .request-status-control{width:100%}
  .request-status-control select{flex:1}
 }
+
+
+/* Catalogue-scale browsing and direct topic-pack actions */
+.catalogue-result-heading{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin:0 0 20px}
+.catalogue-result-heading p{margin:0}
+.catalogue-disclaimer{font-size:11px;color:#6a7b91}
+.topic-download-quick{display:inline-flex;align-items:center;gap:5px;color:#174ea6;font-size:11px;font-weight:850;border:1px solid #dbe5f3;border-radius:5px;padding:5px 8px;background:#f9fbff}
+.topic-download-quick:hover{border-color:#a9c1e6;background:#edf4ff}
+.catalogue-help{margin-top:44px}
+.catalogue-bottom-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.catalogue-bottom-actions a{display:inline-flex;align-items:center;justify-content:center}
+@media(max-width:780px){.catalogue-result-heading{align-items:flex-start;flex-direction:column;gap:6px}.catalogue-bottom-actions{display:grid;grid-template-columns:1fr}.catalogue-bottom-actions a{width:100%}.topic-meta .topic-download-quick{white-space:normal}}
