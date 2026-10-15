@@ -243,6 +243,7 @@ export async function GET(request: Request, { params }: DownloadContext) {
   const topic = allTopics.find((item) => item.slug === slug);
   if (!topic) return new Response("Topic not found", { status: 404 });
   const guide = buildGuide(topic);
+  const { records: literature, searchedAt } = await fetchTopicLiterature(topic);
   const { searchParams } = new URL(request.url);
   const format = (searchParams.get("format") || "doc").toLowerCase();
   const safeSlug = topic.slug.replace(/[^a-z0-9-]/gi, "");
