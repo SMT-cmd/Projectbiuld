@@ -1,0 +1,3 @@
+import Link from "next/link";
+export const metadata={title:"Payment status"};
+export default async function PaymentVerify({searchParams}:{searchParams:Promise<{reference?:string}>}){const {reference}=await searchParams;return <section className="page-content"><div className="form-card"><div className="eyebrow">PAYMENT STATUS</div><h1 style={{fontSize:34}}>Checking your payment</h1><p className="muted">Reference: {reference||"Not provided"}. Payment confirmation is processed securely by the server webhook. Do not treat this return page alone as proof of payment.</p><p className="muted">If your order status does not update, contact support with your reference.</p><Link className="btn-primary" href="/">Back to homepage</Link></div></section>;}
