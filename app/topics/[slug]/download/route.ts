@@ -170,12 +170,62 @@ function asText(topic: (typeof allTopics)[number], guide: ReturnType<typeof buil
     "9. SAMPLE QUESTIONNAIRE PROMPTS — ADAPT AND VALIDATE",
     ...guide.questionnaire.map((item, index) => `${index + 1}. ${item}`),
     "",
-    "10. SUGGESTED CHAPTER STRUCTURE",
-    "Chapter One — Introduction: background with citations, problem statement, aim/objectives, research questions (and hypotheses where justified), significance, scope, and operational definitions.",
-    "Chapter Two — Literature Review: conceptual review, theories/framework, critical review of relevant empirical studies, synthesis, and the specific research gap supported by sources.",
-    "Chapter Three — Methodology: design, setting, population, sampling, instrument/materials, validity/trustworthiness, procedures, analysis, and ethical considerations.",
-    "Chapter Four — Results and Discussion: report only real analysed data or genuine documented findings; present appropriate tables/figures and compare results with literature.",
-    "Chapter Five — Summary, Conclusion and Recommendations: answer each research question from the findings, state limits, and give proportionate recommendations.",
+    "10. FIVE-CHAPTER PROJECT WRITING FRAMEWORK",
+    "",
+    "CHAPTER ONE — INTRODUCTION",
+    "1.1 Background of the study: Move from the wider international/disciplinary context to the relevant region and then the selected local setting. Define the key concepts, explain what credible prior evidence says, compare important perspectives, and cite original sources for factual statements. Do not treat a generic topic description as evidence of a local problem.",
+    "1.2 Statement of the problem: Although " + topic.title.toLowerCase() + " is the subject of interest, the specific problem must be demonstrated in the chosen context. Explain who is affected, what evidence confirms the issue, what is already known, what remains uncertain or understudied, and why the gap matters. Insert current local statistics or documented observations only when a verifiable source is available.",
+    "Problem statement evidence prompt: In [setting/population], [specific issue] appears in [documented evidence/source]. Existing studies have investigated [what the sources actually report], but evidence about [specific local gap] remains limited or inconsistent. This study will examine [bounded issue] using [proposed method]. Replace each bracketed phrase with verified information; do not leave placeholders in a submitted proposal.",
+    "1.3 Aim: " + guide.aim,
+    "1.4 Specific objectives:",
+    ...guide.objectives.map((item, index) => (index + 1) + ". " + item),
+    "1.5 Research questions:",
+    ...guide.questions.map((item, index) => (index + 1) + ". " + item),
+    "1.6 Research hypotheses: Include testable null/alternative hypotheses only if the design, variables, and analysis justify them. Qualitative and descriptive projects may not need formal hypotheses.",
+    "1.7 Significance: Explain how the study may be useful to the specific intended groups (for example, practitioners, managers, policy staff, students or researchers) without promising benefits that the evidence cannot establish.",
+    "1.8 Scope: State the exact concepts, population/data source, geographic or organisational boundary, and time period.",
+    "1.9 Limitations: Identify practical constraints and explain how the design will reduce or acknowledge them.",
+    "1.10 Operational definitions: Define important terms as they are used and measured in this particular study, supported by appropriate sources.",
+    "",
+    "CHAPTER TWO — LITERATURE REVIEW",
+    "2.1 Conceptual review: Define the core concepts in this topic using authoritative academic sources. Compare definitions where scholars disagree and state which operational definition the project will use.",
+    "2.2 Theoretical or conceptual framework: Select a theory or model only after reading its primary/authoritative source and demonstrating why it helps explain the research question. Define its constructs and show how they guide the proposed variables, interview themes, or analytical categories.",
+    "2.3 Empirical review: For every study, record the author/year, setting, objective, design, sample/data, analysis, principal reported finding, limitation, and relevance to this project. Summarise the original study accurately rather than copying snippets or inventing findings.",
+    "2.4 Critical synthesis: Compare where studies agree, differ, or use different populations, methods and measures. Explain how these differences affect confidence and transferability. A literature review should synthesise evidence rather than merely list article summaries.",
+    "2.5 Research gap: Derive the gap from the literature records you have actually read. A different city, population or date is not automatically a meaningful gap; explain why the difference matters.",
+    "Literature themes to develop:",
+    ...guide.literatureThemes.map((item, index) => (index + 1) + ". " + item),
+    "Literature evidence matrix columns: Author/year | context | objective | design/sample | measure or themes | findings actually reported | limitations | relevance to this topic.",
+    "",
+    "CHAPTER THREE — METHODOLOGY",
+    "3.1 Research design: " + guide.methods,
+    "3.2 Study setting/data context: Describe the selected location, organisation, platform, archive, or dataset and justify the choice with appropriate evidence.",
+    "3.3 Population or data corpus: Define who/what can be included and excluded. State the sampling frame where one exists.",
+    "3.4 Sample and sampling: State the proposed sample size, sampling technique, eligibility criteria, recruitment/access route and justification. Calculate sample sizes transparently where relevant rather than selecting an arbitrary number.",
+    "3.5 Instrument/materials: Describe questionnaires, interview guides, observation forms, technical test tasks, coding sheets or secondary-data fields. Attach the final instrument in an appendix after piloting and supervisor review.",
+    "3.6 Validity, reliability or trustworthiness: Explain pilot testing, expert review, scale reliability, triangulation, audit trail, intercoder checks or other methods appropriate to the design. Do not claim these checks were completed before they occur.",
+    "3.7 Data collection: Give a repeatable step-by-step procedure, timeline, permissions, and secure data-handling plan.",
+    "3.8 Analysis plan: Map each objective and question to its evidence source and analysis technique. Quantitative analysis may use suitable descriptive statistics and justified tests; qualitative analysis may use transparent coding and theme development; technical studies must define metrics and test conditions.",
+    "3.9 Ethics and data protection: Explain informed consent, voluntary participation, confidentiality, minimisation of sensitive data, secure storage, withdrawal, and institutional approval where required. For health research or studies involving minors, obtain the appropriate specialist and institutional approvals.",
+    "Method alignment matrix: Objective | question | variable/theme | data source | instrument/item | analysis technique.",
+    "",
+    "CHAPTER FOUR — RESULTS AND DISCUSSION (COMPLETE ONLY AFTER REAL ANALYSIS)",
+    "This chapter must not be filled with invented data, fabricated respondents, made-up quotations, or hypothetical statistics presented as actual findings. It can be drafted as a structure before data collection, but results and conclusions must wait for genuine evidence.",
+    "4.1 Evidence/data preparation: Report the actual number of eligible, collected and analysed observations, missing-data decisions, exclusions, and any appropriate quality checks.",
+    "4.2 Participant/source profile: Provide only necessary non-identifying characteristics and explain the denominator for every percentage.",
+    "4.3 Results by objective/question: Present each result in the order of the research objectives. Use clear tables/figures or coded themes, define the unit and denominator, label missing values, and do not duplicate every table value in prose.",
+    "4.4 Discussion: Interpret what the observed results do and do not show. Compare with verified prior studies, explain plausible differences, and distinguish association, participants' perceptions, and causation. Do not generalise beyond the study design or sample.",
+    "Results table shell: [objective/question] | [measure/theme] | [actual result] | [data source/denominator] | [interpretation] | [comparison with verified literature]. Leave it blank until genuine results exist.",
+    "",
+    "CHAPTER FIVE — SUMMARY, CONCLUSION AND RECOMMENDATIONS",
+    "5.1 Summary: Concisely state the problem, aim, design, actual evidence analysed, and the major findings without introducing new results.",
+    "5.2 Conclusion: Answer each research question using the collected evidence. If results are inconclusive, mixed or limited, state this rather than forcing a positive conclusion.",
+    "5.3 Recommendations: Link each recommendation to a specific finding, name the intended audience, and explain a feasible next action. Do not promise outcomes unsupported by the study.",
+    "5.4 Contribution and limitations: State what the project adds in this context and what its sample, measures, design, time period or access prevents it from establishing.",
+    "5.5 Future research: Suggest focused follow-up studies that address limitations identified in the actual project.",
+    "",
+    "REFERENCES AND APPENDICES",
+    "Use the citation style required by the institution. Check every reference against the original publisher, DOI, repository record or library catalogue; include only works that you actually read and cited in the text. Append approved instruments, participant information/consent documents, permission letters, and relevant supplementary materials, removing personal identifiers where needed.",
     "",
     "11. RESPONSIBLE NEXT STEPS",
     ...guide.nextSteps.map((item, index) => `${index + 1}. ${item}`),
@@ -225,12 +275,31 @@ function asWordHtml(topic: (typeof allTopics)[number], guide: ReturnType<typeof 
 <h2>7. Possible methodology</h2><p>${esc(guide.methods)}</p><p>Specify research design, population, sample and sampling procedure, instruments, validity/reliability or qualitative trustworthiness, data collection, analysis, ethics, and data protection.</p>
 <h2>8. Scope</h2><p>${esc(guide.scope)}</p>
 <h2>9. Sample questionnaire prompts — adapt and validate</h2><ol>${list(guide.questionnaire)}</ol>
-<h2>10. Suggested chapter structure</h2>
-<h3>Chapter One — Introduction</h3><p>Background with citations, problem statement, aim/objectives, research questions (and hypotheses where justified), significance, scope, and operational definitions.</p>
-<h3>Chapter Two — Literature Review</h3><p>Conceptual review, theoretical/conceptual framework, critical review of empirical studies, synthesis, and a research gap supported by actual sources.</p>
-<h3>Chapter Three — Methodology</h3><p>Design, setting, population, sampling, instrument/materials, validity/trustworthiness, procedures, analysis, ethical considerations, and data protection.</p>
-<h3>Chapter Four — Results and Discussion</h3><p>Report only real analysed data or genuine documented findings. Present appropriate tables/figures and compare verified results with relevant literature. Do not create or present invented data as real.</p>
-<h3>Chapter Five — Summary, Conclusion and Recommendations</h3><p>Answer each research question from actual findings, acknowledge limitations, and make recommendations proportionate to the evidence.</p>
+<h2>10. Five-chapter project writing framework</h2>
+<h3>CHAPTER ONE — INTRODUCTION</h3>
+<p><strong>1.1 Background of the study.</strong> Move from the wider disciplinary context to the region and then the selected local setting. Define key concepts, compare credible existing evidence and cite original sources. Do not treat a generic topic description as evidence of a local problem.</p>
+<p><strong>1.2 Statement of the problem.</strong> Although \${esc(topic.title.toLowerCase())} is the subject of interest, the specific problem must be demonstrated in the chosen context. Explain who is affected, what verifiable evidence confirms the issue, what is already known, what remains uncertain and why the gap matters. Insert current local statistics only when a reliable source exists.</p>
+<p><strong>Problem-framing starter:</strong> In [setting/population], [specific issue] appears in [documented evidence/source]. Existing studies have investigated [what the sources actually report], but evidence about [specific local gap] remains limited or inconsistent. This study will examine [bounded issue] using [proposed method]. Replace all bracketed phrases with verified information before submitting.</p>
+<p><strong>1.3 Aim.</strong> \${esc(guide.aim)}</p>
+<h4>1.4 Specific objectives</h4><ol>\${list(guide.objectives)}</ol>
+<h4>1.5 Research questions</h4><ol>\${list(guide.questions)}</ol>
+<p><strong>1.6 Hypotheses:</strong> Include testable hypotheses only if the design, variables and analysis justify them. <strong>1.7 Significance:</strong> Explain potential value to specific groups without promising unsupported benefits. <strong>1.8 Scope:</strong> Define concepts, participants/data, location/organisation and period. <strong>1.9 Limitations:</strong> Explain realistic constraints and how they will be addressed. <strong>1.10 Operational definitions:</strong> Define key terms as used in this study, with sources where appropriate.</p>
+<h3>CHAPTER TWO — LITERATURE REVIEW</h3>
+<p><strong>2.1 Conceptual review:</strong> Define the key concepts with authoritative sources and compare differing definitions. <strong>2.2 Theory/framework:</strong> Select a model only after verifying its primary or authoritative source and explaining how its constructs guide the study. <strong>2.3 Empirical review:</strong> For each source, record its setting, objective, method, data/sample, analysis, actual reported findings, limitations, and relevance. <strong>2.4 Critical synthesis:</strong> Compare agreements and differences across studies; do not simply list summaries. <strong>2.5 Research gap:</strong> Derive the gap from records you have read and explain why it matters.</p>
+<h4>Literature themes to develop</h4><ol>\${list(guide.literatureThemes)}</ol>
+<p><strong>Literature matrix:</strong> Author/year | context | objective | design/sample | measures or themes | findings actually reported | limitations | relevance.</p>
+<h3>CHAPTER THREE — METHODOLOGY</h3>
+<p><strong>3.1 Research design:</strong> \${esc(guide.methods)}</p>
+<p><strong>3.2 Study setting/data context:</strong> Describe and justify the location, organisation, platform, archive or dataset. <strong>3.3 Population/data corpus:</strong> Define eligibility and exclusions. <strong>3.4 Sampling:</strong> State sample size, frame, technique, recruitment, eligibility and justification. <strong>3.5 Instrument/materials:</strong> Explain questionnaires, interview guides, coding sheets, test tasks or secondary data fields. <strong>3.6 Quality checks:</strong> Describe appropriate piloting, validity/reliability, triangulation or intercoder procedures; never claim an unperformed check.</p>
+<p><strong>3.7 Data collection:</strong> Provide a repeatable procedure and timeline. <strong>3.8 Analysis plan:</strong> Map every objective to its evidence source and technique. <strong>3.9 Ethics:</strong> Explain consent, confidentiality, data minimisation, storage, permission and required institutional approval.</p>
+<p><strong>Method alignment matrix:</strong> Objective | question | variable/theme | source | instrument/item | analysis technique.</p>
+<h3>CHAPTER FOUR — RESULTS AND DISCUSSION (ONLY AFTER REAL ANALYSIS)</h3>
+<p>This chapter must not contain invented respondents, fabricated quotations, made-up statistics, or hypothetical data presented as real results. Draft the structure now; fill it only after analysing genuine evidence.</p>
+<p><strong>4.1 Evidence preparation:</strong> Report actual eligible/collected/analysed observations, missing data and exclusions. <strong>4.2 Source profile:</strong> Include only necessary non-identifying characteristics and state denominators. <strong>4.3 Results by question/objective:</strong> Use clear tables or documented themes, with labels, measures and denominators. <strong>4.4 Discussion:</strong> Interpret what the results do and do not show and compare with sources actually read; distinguish perception, association and causation.</p>
+<p><strong>Results table shell:</strong> objective/question | measure/theme | actual result | source/denominator | interpretation | comparison with verified literature. Leave this unfilled until genuine data exist.</p>
+<h3>CHAPTER FIVE — SUMMARY, CONCLUSION AND RECOMMENDATIONS</h3>
+<p><strong>5.1 Summary:</strong> Restate the problem, aim, design and actual evidence analysed. <strong>5.2 Conclusion:</strong> Answer each research question using findings, including mixed or inconclusive findings. <strong>5.3 Recommendations:</strong> Link each proposed action to a specific finding and a feasible intended user. <strong>5.4 Contribution and limitations:</strong> Explain what the study adds and what its design prevents it from establishing. <strong>5.5 Future research:</strong> Recommend focused work that responds to the limitations discovered.</p>
+<h3>References and appendices</h3><p>Follow your required citation style. Check every reference against the original publisher, DOI, repository or library catalogue, and cite only works you have actually read. Append approved instruments, participant information/consent documents and permission letters, removing unnecessary personal identifiers.</p>
 <h2>11. Responsible next steps</h2><ol>${list(guide.nextSteps)}</ol>
 <h2>12. Live scholarly records — metadata retrieved for this download</h2><p>Lookup time: ${searchedAt ? esc(searchedAt) : "live lookup unavailable at download time"}.</p>${literature.length ? literature.map((record, index) => `<article><h3>${index + 1}. <a href="${esc(record.url)}">${esc(record.title)}</a></h3><p>${esc(record.authors.join(", ") || "Author details not supplied")}${record.year ? " (" + record.year + ")" : ""}${record.venue ? " · " + esc(record.venue) : ""}</p>${record.doi ? `<p>DOI: <a href="https://doi.org/${esc(record.doi)}">https://doi.org/${esc(record.doi)}</a></p>` : ""}${record.abstract ? `<p>${esc(record.abstract)}</p>` : "<p>Abstract metadata was not provided.</p>"}<p>${record.openAccess ? "An open-access URL is listed in metadata; check its licence and reuse conditions." : "Open full text is not confirmed by the returned metadata."}</p></article>`).join("") : "<p>No publication records were retrieved when this file was generated. Use the external discovery links to run a search.</p>"}<p class="notice">These are candidate search records, not a quality appraisal. Open and read each original source before citing it. Confirm title, authors, date, methods and relevance independently.</p>
 <h2>13. Scholarly discovery links</h2><ul>${queryLinks.map(([label, href]) => `<li><a href="${href}">${esc(label)}</a> — ${esc(decodeURIComponent(href))}</li>`).join("")}</ul>
